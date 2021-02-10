@@ -9,12 +9,9 @@ public class Main {
         System.out.println("Mortgage Calculator: ");
         System.out.println("---------------------");
 
-        final byte MONTH_IN_YEAR = 12;
-        final byte PERCENT = 100;
-
         int principle;
-        float monthlyInterestRate;
-        int numberOfPayments;
+        float annualInterestRate;
+        byte years;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -29,36 +26,46 @@ public class Main {
 
         while (true){
             System.out.print("AnnualInterestRate: ");
-            float annualInterestRate = scanner.nextFloat();
-            if (annualInterestRate>=1 && annualInterestRate<=30) { // for more that 1 statement we need no {} for IF
-                monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
+            annualInterestRate = scanner.nextFloat();
+            if (annualInterestRate>=1 && annualInterestRate<=30) // for more that 1 statement we need no {} for IF
                 break;
-            }
             System.out.println("Enter a value between 1 and 30");
         }
-
 
         while (true) {
             System.out.print("Period (year): ");
-            byte years = scanner.nextByte();
-            if (years >= 1 && years <= 30){
-                numberOfPayments = years * MONTH_IN_YEAR;
+           years = scanner.nextByte();
+            if (years >= 1 && years <= 30)
             break;
-        }
             System.out.println("Enter a value between 1 and 30");
         }
 
-
-
-        double mortgage = principle
-                * (monthlyInterestRate * Math.pow(monthlyInterestRate + 1, numberOfPayments))
-                / (Math.pow(monthlyInterestRate + 1, numberOfPayments) - 1);
-
+        Double mortgage = mortgageCalculator(principle, annualInterestRate , years);
 
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println("Mortgage: " + mortgageFormatted);
         // or
         System.out.println("Mortgage: " + (NumberFormat.getCurrencyInstance().format(mortgage)));
 
+    }
+
+
+    public static double mortgageCalculator(
+            int principle,
+            float annualInterestRate,
+            byte years
+    ){
+        final byte MONTH_IN_YEAR = 12;
+        final byte PERCENT = 100;
+
+        float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
+        short numberOfPayments = (short) (years * MONTH_IN_YEAR);
+
+
+        return principle
+                * (monthlyInterestRate * Math.pow(monthlyInterestRate + 1, numberOfPayments))
+                / (Math.pow(monthlyInterestRate + 1, numberOfPayments) - 1);
+
+        // Local variable 'mortgage' is redundant so we refactor = inline variable
     }
 }
