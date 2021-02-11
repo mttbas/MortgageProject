@@ -66,6 +66,14 @@ public class Main {
                 * (monthlyInterestRate * Math.pow(monthlyInterestRate + 1, numberOfPayments))
                 / (Math.pow(monthlyInterestRate + 1, numberOfPayments) - 1);
 
-        // Local variable 'mortgage' is redundant so we refactor = inline variable
+        /*
+         Local variable 'mortgage' is redundant so we refactor = inline variable
+         before we had this code:
+         double mortgage = principle
+                * (monthlyInterestRate * Math.pow( 1 + monthlyInterestRate, numberOfPayments))
+               / (Math.pow( 1 + monthlyInterestRate, numberOfPayments) - 1 );
+        return mortgage;
+        */
+
     }
 }
