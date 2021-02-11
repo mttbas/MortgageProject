@@ -4,51 +4,37 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         System.out.println("Mortgage Calculator: ");
         System.out.println("---------------------");
+        // by creating readNumber Method now we can get rid of while LOOPs
+        // by calling the readNumber Method and giving the parameters( Q , min, max) in each case.
+        // but we need to cast the Numbers to get the right type of variable.
 
-        int principle;
-        float annualInterestRate;
-        byte years;
-
-        Scanner scanner = new Scanner(System.in);
-
-        // infinite LOOP while (true){}
-        while (true) {
-            System.out.print("Principle ( € 1K - € 1M) : ");
-            principle = scanner.nextInt();
-            if (principle>= 1_000 && principle<= 1_000_000) // for one statement we need no {} for IF
-                break;
-            System.out.println("Enter a value between 1000 and 1000000 ");
-        }
-
-        while (true){
-            System.out.print("AnnualInterestRate: ");
-            annualInterestRate = scanner.nextFloat();
-            if (annualInterestRate>=1 && annualInterestRate<=30) // for more that 1 statement we need no {} for IF
-                break;
-            System.out.println("Enter a value between 1 and 30");
-        }
-
-        while (true) {
-            System.out.print("Period (year): ");
-           years = scanner.nextByte();
-            if (years >= 1 && years <= 30)
-            break;
-            System.out.println("Enter a value between 1 and 30");
-        }
+        int principle = (int) readNumber("Principle ( € 1K - € 1M) : ", 1_000, 1_000_000);
+        float annualInterestRate = (float) readNumber("AnnualInterestRate: ", 1, 30);
+        byte years = (byte) readNumber("Period (year): ", 1, 30);
 
         Double mortgage = mortgageCalculator(principle, annualInterestRate , years);
-
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
-        System.out.println("Mortgage: " + mortgageFormatted);
-        // or
         System.out.println("Mortgage: " + (NumberFormat.getCurrencyInstance().format(mortgage)));
-
     }
 
+
+
+    public static double readNumber(String prompt, double min, double max ){
+        Scanner scanner = new Scanner(System.in);
+        double value; // it shall be defined here not in while loop
+
+        while (true){
+            System.out.print(prompt); // is the question we ask from the user; calling this method we
+            // can give in any question, any min or max. we do not need while loops.
+            value = scanner.nextDouble(); // value is a general value instead of different numbers
+            if (value>=min && value<=max) // for more that 1 statement we need no {} for IF
+                break;
+            System.out.println("Enter a value between" + min + "and" + max);
+        }
+        return value;
+    }
 
     public static double mortgageCalculator(
             int principle,
@@ -61,19 +47,9 @@ public class Main {
         float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
         short numberOfPayments = (short) (years * MONTH_IN_YEAR);
 
-
         return principle
                 * (monthlyInterestRate * Math.pow(monthlyInterestRate + 1, numberOfPayments))
                 / (Math.pow(monthlyInterestRate + 1, numberOfPayments) - 1);
-
-        /*
-         Local variable 'mortgage' is redundant so we refactor = inline variable
-         before we had this code:
-         double mortgage = principle
-                * (monthlyInterestRate * Math.pow( 1 + monthlyInterestRate, numberOfPayments))
-               / (Math.pow( 1 + monthlyInterestRate, numberOfPayments) - 1 );
-        return mortgage;
-        */
 
     }
 }
