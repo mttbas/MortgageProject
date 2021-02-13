@@ -4,22 +4,32 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Mortgage Calculator: ");
-        System.out.println("---------------------");
-        // by creating readNumber Method now we can get rid of while LOOPs
-        // by calling the readNumber Method and giving the parameters( Q , min, max) in each case.
-        // but we need to cast the Numbers to get the right type of variable.
+    final static byte MONTH_IN_YEAR = 12;
+    final static byte PERCENT = 100;
 
+    public static void main(String[] args) {
+
+        // by creating readNumber Method now we can get rid of while LOOPs
         int principle = (int) readNumber("Principle ( € 1K - € 1M) : ", 1_000, 1_000_000);
         float annualInterestRate = (float) readNumber("AnnualInterestRate: ", 1, 30);
         byte years = (byte) readNumber("Period (year): ", 1, 30);
 
         Double mortgage = mortgageCalculator(principle, annualInterestRate , years);
-        System.out.println("Mortgage: " + (NumberFormat.getCurrencyInstance().format(mortgage)));
+        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        System.out.println();
+        System.out.println("MORTGAGE: ");
+        System.out.println("----------");
+        System.out.println("Monthly Payments: " + mortgageFormatted);
+
+        // now the same process for calculating balance: copy & paste and edit
+
+        System.out.println();
+        System.out.println("Payment Schedule: ");
+        System.out.println("-------------------");
+        for (short numberOfPaymentsMade =1 ; numberOfPaymentsMade<=years * MONTH_IN_YEAR; numberOfPaymentsMade++){
+            Double balance = calculateBalance (principle, annualInterestRate, years, numberOfPaymentsMade);
+            System.out.println(NumberFormat.getCurrencyInstance().format(balance));}
     }
-
-
 
     public static double readNumber(String prompt, double min, double max ){
         Scanner scanner = new Scanner(System.in);
@@ -36,14 +46,34 @@ public class Main {
         return value;
     }
 
+    public static double calculateBalance(
+            int principle,
+            float annualInterestRate,
+            byte years,
+            short numberOfPaymentsMade
+    ){
+        float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
+        short numberOfPayments = (short) (years * MONTH_IN_YEAR);
+
+        return principle
+                * ( Math.pow( 1+ monthlyInterestRate, numberOfPayments) - Math.pow(1+ monthlyInterestRate, numberOfPaymentsMade))
+                / (Math.pow(1+ monthlyInterestRate, numberOfPayments) - 1);
+
+        /* error: Local variable 'balance' is redundant. so we change the below statements
+        using inline variable.
+        double balance = principle
+                * ( Math.pow( 1+ monthlyInterestRate, numberOfPayments) - Math.pow(1+ monthlyInterestRate, numberOfPaymentsMade))
+                / (Math.pow(1+ monthlyInterestRate, numberOfPayments) - 1);
+
+        return balance;
+        */
+    }
+
     public static double mortgageCalculator(
             int principle,
             float annualInterestRate,
             byte years
     ){
-        final byte MONTH_IN_YEAR = 12;
-        final byte PERCENT = 100;
-
         float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
         short numberOfPayments = (short) (years * MONTH_IN_YEAR);
 
