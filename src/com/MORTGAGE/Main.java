@@ -3,8 +3,8 @@ package com.MORTGAGE;
 import java.text.NumberFormat;
 
 public class Main {
-    final static byte MONTH_IN_YEAR = 12;
-    final static byte PERCENT = 100;
+    static final byte MONTH_IN_YEAR = 12;
+    static final byte PERCENT = 100;
 
     public static void main(String[] args) {
 
