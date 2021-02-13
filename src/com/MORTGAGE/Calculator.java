@@ -2,6 +2,9 @@ package com.MORTGAGE;
 
 public class Calculator {
 
+    public static final byte MONTH_IN_YEAR = 12;
+    public static final byte PERCENT = 100;
+
     private int principle;
     private float annualInterestRate;
     private byte years;
@@ -14,8 +17,8 @@ public class Calculator {
 
     public double calculateBalance(short numberOfPaymentsMade) {
 
-        float monthlyInterestRate = annualInterestRate / Main.PERCENT / Main.MONTH_IN_YEAR;
-        short numberOfPayments = (short) (years * Main.MONTH_IN_YEAR);
+        float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
+        short numberOfPayments = (short) (years * MONTH_IN_YEAR);
 
         return principle
                 * (Math.pow(1 + monthlyInterestRate, numberOfPayments) - Math.pow(1 + monthlyInterestRate, numberOfPaymentsMade))
@@ -24,8 +27,8 @@ public class Calculator {
     }
 
     public double mortgageCalculator() {
-        float monthlyInterestRate = annualInterestRate / Main.PERCENT / Main.MONTH_IN_YEAR;
-        short numberOfPayments = (short) (years * Main.MONTH_IN_YEAR);
+        float monthlyInterestRate = annualInterestRate / PERCENT / MONTH_IN_YEAR;
+        short numberOfPayments = (short) (years * MONTH_IN_YEAR);
 
         return principle
                 * (monthlyInterestRate * Math.pow(monthlyInterestRate + 1, numberOfPayments))

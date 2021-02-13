@@ -1,8 +1,6 @@
 package com.MORTGAGE;
 
 public class Main {
-    static final byte MONTH_IN_YEAR = 12;
-    static final byte PERCENT = 100;
 
     public static void main(String[] args) {
 
