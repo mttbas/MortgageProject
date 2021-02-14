@@ -2,8 +2,11 @@ package com.MORTGAGE;
 
 public class Calculator {
 
-    public static final byte MONTH_IN_YEAR = 12;
-    public static final byte PERCENT = 100;
+    // right click on Fields/methods or class names .... FIND USAGES!!!!!!!
+    // we make them private, because after making getRemainingBalances method and omitting
+    // those 3 lines , we no longer need them.
+    private static final byte MONTH_IN_YEAR = 12;
+    private static final byte PERCENT = 100;
 
     private int principle;
     private float annualInterestRate;
