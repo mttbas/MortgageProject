@@ -36,6 +36,14 @@ public class Calculator {
 
     }
 
+    public double[] getRemainingBalances(){
+        var balances = new double[getNumberOfPayments()];
+        for (short numberOfPaymentsMade = 1; numberOfPaymentsMade <= balances.length; numberOfPaymentsMade++) {
+            balances[numberOfPaymentsMade -1] = calculateBalance(numberOfPaymentsMade);
+        }
+        return balances;
+    }
+
     private short getNumberOfPayments() {
         return (short) (years * MONTH_IN_YEAR);
     }
@@ -44,7 +52,11 @@ public class Calculator {
         return annualInterestRate / PERCENT / MONTH_IN_YEAR;
     }
 
-    public short getYears() {
-        return years;
-    }
+
+// we omit it because after making getRemainingBalances() and omitting 3 lines in MortgageReporter
+//  we it is never used and it id redundant.
+
+   /*
+    public short getYears() { return years;}
+    */
 }

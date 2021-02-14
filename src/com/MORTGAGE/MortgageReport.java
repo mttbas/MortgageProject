@@ -28,9 +28,16 @@ public class MortgageReport {
         System.out.println();
         System.out.println("Payment Schedule: ");
         System.out.println("-------------------");
-        for (short numberOfPaymentsMade = 1; numberOfPaymentsMade <= calculator.getYears() * Calculator.MONTH_IN_YEAR; numberOfPaymentsMade++) {
+        for (double balance: calculator.getRemainingBalances())
+        System.out.println(NumberFormat.getCurrencyInstance().format(balance));
+
+        // instead of the below 3 lines we can use the 2 line Logic, making the Method getRemainingBalances
+        // method in Calculator class
+        // by omitting these lines we do not need getYears method and so we delete it from Calculator class
+
+        /* for (short numberOfPaymentsMade = 1; numberOfPaymentsMade <= calculator.getYears() * Calculator.MONTH_IN_YEAR; numberOfPaymentsMade++) {
             Double balance = calculator.calculateBalance(numberOfPaymentsMade);
             System.out.println(NumberFormat.getCurrencyInstance().format(balance));
+        */
         }
-    }
 }
