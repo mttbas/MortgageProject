@@ -3,6 +3,7 @@ package com.MORTGAGE;
 import java.text.NumberFormat;
 
 public class MortgageReport {
+    private final NumberFormat currency;
     private Calculator calculator;
     // instead of var calculator = new Calculator(); we use it as INSTANCE FIELD in class level
     // here we are calling mortgageCalculator of the Main Class: Main.mortgageCalculator
@@ -10,6 +11,7 @@ public class MortgageReport {
 
     public MortgageReport(Calculator calculator) {
         this.calculator = calculator;
+        currency = NumberFormat.getCurrencyInstance();
     }
 
     public void printMortgage() {
@@ -17,7 +19,7 @@ public class MortgageReport {
         // because we need this object in other method we define it as an INSTANCE FIELD and 
         // remove the static from the methods by making them refactor -INSTANCE
         Double mortgage = calculator.mortgageCalculator();
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        String mortgageFormatted = currency.format(mortgage);
         System.out.println();
         System.out.println("MORTGAGE: ");
         System.out.println("----------");
@@ -29,7 +31,7 @@ public class MortgageReport {
         System.out.println("Payment Schedule: ");
         System.out.println("-------------------");
         for (double balance: calculator.getRemainingBalances())
-        System.out.println(NumberFormat.getCurrencyInstance().format(balance));
+        System.out.println(currency.format(balance));
 
         // instead of the below 3 lines we can use the 2 line Logic, making the Method getRemainingBalances
         // method in Calculator class
